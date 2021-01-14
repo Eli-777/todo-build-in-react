@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -35,8 +35,8 @@ function App() {
   const [inputValue, setInputValue] = useState('')
   const [currentEdit, setCurrentEdit] = useState('')
   const numOfRemaining = todos.filter(todo => !todo.isDone).length
-  
-  
+
+
 
 
   function handleClick(type, id) {
@@ -64,7 +64,7 @@ function App() {
 
   function handleAdd() {
     const Value = inputValue.trim()
-    if (!Value) return 
+    if (!Value) return
     setTodos((prevTodos) => {
       return [
         ...prevTodos,
@@ -142,7 +142,7 @@ function App() {
     }
   }
 
-  function handleClear () {
+  function handleClear() {
     setTodos((prevTodos) => {
       return prevTodos.filter(todo => !todo.isDone)
     })
@@ -152,25 +152,32 @@ function App() {
     <div className="app">
       <Header />
 
-      <AddTodo handleChange={handleChange} inputValue={inputValue} handleClick={handleClick} />
+      <AddTodo
+        handleChange={handleChange}
+        inputValue={inputValue}
+        handleClick={handleClick}
+      />
 
       {
-        todos.length !== 0  ? 
-        <Todos
-          todos={todos}
-          handleClick={handleClick}
-          handleChange={handleChange}
-          handleKeyUp={handleKeyUp}
-          doneEdit={doneEdit}
-          handleChangeEdit={handleChangeEdit}
-          currentEdit={currentEdit}
-  
-        />
-        :
-        <div className="noTodos">已無代辦事項</div>
+        todos.length !== 0 ?
+          <Todos
+            todos={todos}
+            handleClick={handleClick}
+            handleChange={handleChange}
+            handleKeyUp={handleKeyUp}
+            doneEdit={doneEdit}
+            handleChangeEdit={handleChangeEdit}
+            currentEdit={currentEdit}
+
+          />
+          :
+          <div className="noTodos">已無代辦事項</div>
       }
 
-      <Footer numOfRemaining={numOfRemaining} handleClick={handleClick} />
+      <Footer
+        numOfRemaining={numOfRemaining}
+        handleClick={handleClick}
+      />
     </div>
   );
 }

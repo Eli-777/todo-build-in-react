@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 
 function TodoItem({ todo, handleClick, handleKeyUp, doneEdit, handleChangeEdit, currentEdit }) {
@@ -8,7 +8,7 @@ function TodoItem({ todo, handleClick, handleKeyUp, doneEdit, handleChangeEdit, 
     if (todo.isEdit) {
       inputElement.focus();
     }
-  }, [ inputElement, todo.isEdit]);
+  }, [inputElement, todo.isEdit]);
 
 
   return (

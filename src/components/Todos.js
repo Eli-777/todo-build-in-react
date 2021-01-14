@@ -2,7 +2,7 @@ import React from 'react';
 
 import TodoItem from './TodoItem'
 
-function Todos({ todos, handleClick, handleKeyUp,doneEdit, handleChangeEdit, currentEdit, }) {
+function Todos({ todos, ...props }) {
   return (
     <div className="todos">
       {
@@ -10,11 +10,7 @@ function Todos({ todos, handleClick, handleKeyUp,doneEdit, handleChangeEdit, cur
           <TodoItem 
             key={todo.id} 
             todo={todo} 
-            handleClick={handleClick} 
-            handleKeyUp={handleKeyUp} 
-            doneEdit={doneEdit}
-            handleChangeEdit={handleChangeEdit}
-            currentEdit={currentEdit}
+            {...props}
 
           />
         ))
