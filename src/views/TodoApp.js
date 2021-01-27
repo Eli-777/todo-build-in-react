@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import { Redirect } from 'react-router-dom'
 
 
 import Header from '../components/header/Header'
@@ -30,13 +31,16 @@ const defaultTodos = [
   },
 ]
 
-function TodoApp() {
+function TodoApp({ response, handleFBLogout }) {
   const [todos, setTodos] = useState(defaultTodos)
   const [inputValue, setInputValue] = useState('')
   const [currentEdit, setCurrentEdit] = useState('')
   const numOfRemaining = todos.filter(todo => !todo.isDone).length
 
 
+  if (response !== 'connected') {
+    return <Redirect to="/login" />
+  }
 
 
   function handleClick(type, id) {
@@ -150,7 +154,7 @@ function TodoApp() {
 
   return (
     <div>
-      <Header handleClick={handleClick}/>
+      <Header handleClick={handleClick} />
 
       <AddTodo
         handleChange={handleChange}
@@ -176,6 +180,7 @@ function TodoApp() {
 
       <Footer
         numOfRemaining={numOfRemaining}
+        handleFBLogout={handleFBLogout}
       />
     </div>
   );

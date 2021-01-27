@@ -1,4 +1,6 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom'
+
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -29,11 +31,16 @@ const Button = styled.button`
   }
 `;
 
-function Login(props) {
+function Login({ response, handleFBLogin }) {
+
+  if (response === 'connected') {
+    return <Redirect to="/todos" />
+  }
+
   return (
     <Container>
       <Title>登入 Todo</Title>
-      <Button className="btn-reset"> 使用 Facebook 登入 </Button>
+      <Button className="btn-reset" onClick={handleFBLogin}> 使用 Facebook 登入 </Button>
     </Container>
   );
 }
