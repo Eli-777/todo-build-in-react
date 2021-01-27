@@ -30,37 +30,6 @@ header {
   }
 }
 
-footer {
-  padding: 0 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  p {
-    font-size: 14px;
-    font-weight: 300;
-    margin: 2rem 0 1rem;
-  }
-
-  .btn-clear {
-    border: 1px solid var(--major);
-    border-radius: 50px;
-    margin: 2rem 0 1rem;
-    padding: .4rem;
-    color: var(--major);
-    transition: all .3s;
-
-    &:hover {
-      background-color: var(--major);
-      color: #fff;
-      font-weight: 500;
-      transform: translateY(-10px);
-    }
-    &:active {
-      transform: translateY(0px);
-    }
-  }
-}
 
 
 .add-todo {
@@ -161,6 +130,9 @@ footer {
       .task-item-body-text {
         display: none;
       }
+    }
+    .task-item-action  {
+      display: none;
     }
   }
 

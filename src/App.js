@@ -1,183 +1,43 @@
-import React, { useState } from 'react'
-import { v4 as uuidv4 } from 'uuid';
+import React,{useState} from 'react'
+import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom'
 
-
-import Header from './components/Header'
-import Footer from './components/Footer'
-import AddTodo from './components/AddTodo'
-import Todos from './components/Todos'
+import TodoApp from './views/TodoApp'
+import Login from './views/Login'
+import NotFound from './views/NotFound'
 
 import './App.scss';
 
-const defaultTodos = [
-  {
-    id: uuidv4(),
-    title: 'Learn React',
-    isDone: false,
-    isEdit: false
-  },
-  {
-    id: uuidv4(),
-    title: 'Become Frontend Developer',
-    isDone: true,
-    isEdit: false
-  },
-  {
-    id: uuidv4(),
-    title: 'Learn React from Hooks',
-    isDone: false,
-    isEdit: false
-  },
-]
+
 
 function App() {
-  const [todos, setTodos] = useState(defaultTodos)
-  const [inputValue, setInputValue] = useState('')
-  const [currentEdit, setCurrentEdit] = useState('')
-  const numOfRemaining = todos.filter(todo => !todo.isDone).length
+  const [isLogin, setIsLogin] = useState(false)
+  const isAtLogin = useRouteMatch('/login')
 
-
-
-
-  function handleClick(type, id) {
-    switch (type) {
-      case 'add':
-        return handleAdd()
-      case 'done':
-        return handleDone(id)
-      case 'delete':
-        return handleDelete(id)
-      case 'edit':
-        return toggleIsEdit(id)
-      case 'clear':
-        return handleClear()
-
-      default:
-        return
-    }
-
-  }
-
-  function handleChange(e) {
-    setInputValue(e.target.value)
-  }
-
-  function handleAdd() {
-    const Value = inputValue.trim()
-    if (!Value) return
-    setTodos((prevTodos) => {
-      return [
-        ...prevTodos,
-        {
-          id: uuidv4(),
-          title: inputValue,
-          isDone: false
-        }
-      ]
-    })
-    setInputValue('')
-  }
-
-  function handleDone(id) {
-    setTodos((prevTodos) => {
-      return prevTodos.map(todo => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            isDone: !todo.isDone
-          }
-        }
-        return todo
-      })
-    })
-  }
-
-  function handleDelete(id) {
-    setTodos((prevTodos) => {
-      return prevTodos.filter(todo => todo.id !== id)
-    })
-  }
-
-  function handleChangeEdit(e) {
-    setCurrentEdit(e.target.value)
-  }
-
-  function toggleIsEdit(id) {
-    setTodos((prevTodos) => {
-      return prevTodos.map(todo => {
-        if (todo.id === id) {
-          setCurrentEdit(todo.title)
-          return {
-            ...todo,
-            isEdit: !todo.isEdit
-          }
-        }
-        return todo
-      })
-    })
-  }
-  function doneEdit(id, currentEdit) {
-    setTodos((prevTodos) => {
-      return prevTodos.map(todo => {
-        if (todo.id === id) {
-
-          return {
-            ...todo,
-            title: currentEdit,
-            isEdit: false
-          }
-        }
-        return todo
-      })
-    })
-  }
-
-  function handleKeyUp(id, currentEdit, event) {
-    let keyCode = event.keyCode
-    if (keyCode === 13) {
-      doneEdit(id, currentEdit)
-    }
-    if (keyCode === 27) {
-      toggleIsEdit(id)
-    }
-  }
-
-  function handleClear() {
-    setTodos((prevTodos) => {
-      return prevTodos.filter(todo => !todo.isDone)
-    })
+  //不是在登入頁並且沒登入就轉到登入頁
+  //如果只有 isLogin 做條件控制會無限迴圈，因為登入狀況沒改變就一直轉址
+  if(!isLogin && !isAtLogin) {
+    return <Redirect to="/login" />;
   }
 
   return (
     <div className="app">
-      <Header />
-
-      <AddTodo
-        handleChange={handleChange}
-        inputValue={inputValue}
-        handleClick={handleClick}
-      />
-
-      {
-        todos.length !== 0 ?
-          <Todos
-            todos={todos}
-            handleClick={handleClick}
-            handleChange={handleChange}
-            handleKeyUp={handleKeyUp}
-            doneEdit={doneEdit}
-            handleChangeEdit={handleChangeEdit}
-            currentEdit={currentEdit}
-
-          />
-          :
-          <div className="noTodos">已無代辦事項</div>
-      }
-
-      <Footer
-        numOfRemaining={numOfRemaining}
-        handleClick={handleClick}
-      />
+      <Switch>
+        {/* 這裡是進入主畫面時有登入就進 todo 頁面，沒有就進登入頁面 */}
+        <Route exact path="/">
+          {
+            isLogin ? <Redirect to="/todos" /> : <Redirect to="/login" />
+          }
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/todos">
+          <TodoApp />
+        </Route>
+        <Route path="*">
+          <NotFound/>
+        </Route>
+      </Switch>
     </div>
   );
 }
