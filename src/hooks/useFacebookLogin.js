@@ -16,7 +16,7 @@ const useFacebookLogin = () => {
 
       //確認登入
       window.FB.getLoginStatus(function (response) {
-        // statusChangeCallback(response);
+        console.log(response)
         setResponse(response.status)
       });
 
@@ -35,11 +35,23 @@ const useFacebookLogin = () => {
   }, [])
 
 
-
+  function getUser() {
+    //拿取使用者資料
+    window.FB.api(
+      '/me',
+      'GET',
+      { fields: "id,name" },
+      function (response) {
+        // Insert your code here
+        console.log(response)
+      }
+    );
+  }
 
   function handleFBLogin() {
     window.FB.login(function (response) {
       setResponse(response.status)
+      getUser()
     }, { scope: 'public_profile,email' });
   }
 
@@ -49,7 +61,7 @@ const useFacebookLogin = () => {
     });
   }
 
-  return [response, handleFBLogin, handleFBLogout] 
+  return [response, handleFBLogin, handleFBLogout]
 }
 
 

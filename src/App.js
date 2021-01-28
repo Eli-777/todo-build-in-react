@@ -15,7 +15,7 @@ function App() {
 
   const [response, handleFBLogin, handleFBLogout] = useFacebookLogin();
 
-  if(!response) {
+  if (!response) {
     return <> </>
   }
   if (response !== 'connected' && !isAtLogin) {
@@ -33,7 +33,7 @@ function App() {
           }
         </Route>
         <Route path="/login">
-          <Login response={response} handleFBLogin={handleFBLogin}/>
+          <Login response={response} handleFBLogin={handleFBLogin} />
         </Route>
         <Route path="/todos">
           <TodoApp response={response} handleFBLogout={handleFBLogout} />
