@@ -43,24 +43,6 @@ function TodoApp({ response, handleFBLogout }) {
   }
 
 
-  function handleClick(type, id) {
-    switch (type) {
-      case 'add':
-        return handleAdd()
-      case 'done':
-        return handleDone(id)
-      case 'delete':
-        return handleDelete(id)
-      case 'edit':
-        return toggleIsEdit(id)
-      case 'clear':
-        return handleClear()
-
-      default:
-        return
-    }
-
-  }
 
   function handleChange(e) {
     setInputValue(e.target.value)
@@ -154,19 +136,21 @@ function TodoApp({ response, handleFBLogout }) {
 
   return (
     <div>
-      <Header handleClick={handleClick} />
+      <Header handleClear={handleClear} />
 
       <AddTodo
         handleChange={handleChange}
         inputValue={inputValue}
-        handleClick={handleClick}
+        handleAdd={handleAdd}
       />
 
       {
         todos.length !== 0 ?
           <Todos
             todos={todos}
-            handleClick={handleClick}
+            handleDone={handleDone}
+            toggleIsEdit={toggleIsEdit}
+            handleDelete={handleDelete}
             handleChange={handleChange}
             handleKeyUp={handleKeyUp}
             doneEdit={doneEdit}

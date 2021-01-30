@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from 'clsx';
 
-function AddTodo({ handleChange, inputValue, handleClick }) {
+function AddTodo({ handleChange, inputValue, handleAdd }) {
   return (
     <div className={clsx("add-todo", { active: inputValue })}>
       <label className="add-todo-icon icon" htmlFor="add-todo-input"></label>
@@ -17,7 +17,7 @@ function AddTodo({ handleChange, inputValue, handleClick }) {
       <div className="add-todo-action">
         <button 
           className="btn-reset btn-add" 
-          onClick={() => handleClick('add')}
+          onClick={handleAdd}
         > 
           新增 
         </button>

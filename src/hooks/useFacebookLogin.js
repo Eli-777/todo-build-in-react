@@ -43,7 +43,7 @@ const useFacebookLogin = () => {
       { fields: "id,name" },
       function (response) {
         // Insert your code here
-        console.log(response)
+        // console.log(response)
       }
     );
   }

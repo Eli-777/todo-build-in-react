@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Container = styled.header`
   display: flex;
@@ -9,15 +9,15 @@ const Container = styled.header`
 const ClearAllDoneButton = styled.button`
   border: 1px solid var(--major);
   border-radius: 50px;
-  padding: .4rem;
+  padding: 0.4rem;
   color: var(--major);
-  transition: all .3s;
+  transition: all 0.3s;
 
   &:hover {
     background-color: var(--major);
     color: #fff;
     font-weight: 500;
   }
-`
+`;
 
-export { Container, ClearAllDoneButton }
+export { Container, ClearAllDoneButton };
